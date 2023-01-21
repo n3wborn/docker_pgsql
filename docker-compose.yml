@@ -1,0 +1,20 @@
+services:
+  db_pgsql:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${DB:-db}
+      - POSTGRES_USER={DB_USER:-user}
+      - POSTGRES_PASSWORD=${DB_PWD:-pwd}
+    networks:
+      - default
+      - caddy_proxy
+    ports:
+      - "${HOST_PORT:-5432}:5432"
+
+networks:
+  default:
+  caddy_proxy:
+    name: caddy
+    external: true
